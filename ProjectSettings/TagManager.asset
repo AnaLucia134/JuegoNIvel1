@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Suelo
+  - Personaje
+  - Trampa
+  - Escalera
+  - Item
+  - Escalera
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Jugador
+    uniqueID: 361725893
+    locked: 0
+  - name: Escalera
+    uniqueID: 411581535
+    locked: 0
+  - name: plataformas
+    uniqueID: 693742633
+    locked: 0
+  - name: fondo
+    uniqueID: 1875125413
+    locked: 0
