@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2162096410674036963}
   - component: {fileID: 6551570502340766329}
   - component: {fileID: 1449611259489738554}
-  - component: {fileID: 8829785789056006320}
   - component: {fileID: 2049243418118779101}
   m_Layer: 0
   m_Name: Manzana
@@ -122,20 +121,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.2
---- !u!114 &8829785789056006320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6777497543808176373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e87962b0d47df44d8edd174cb142af5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puntosBrindados: 100
-  sonidoRecogerItem: {fileID: 8300000, guid: ec86bd313212c25449427bda55172017, type: 3}
 --- !u!82 &2049243418118779101
 AudioSource:
   m_ObjectHideFlags: 0

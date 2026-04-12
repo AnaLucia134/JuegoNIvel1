@@ -50,6 +50,15 @@ public class Salud : MonoBehaviour
     	alActualizarSalud?.Invoke();
 	}
 
+	public void CurarCompletamente()
+	{
+		if (estaMuerto) return;
+
+		// Restaurar la salud al máximo permitido
+		saludActual = saludMax;
+		alActualizarSalud?.Invoke();
+	}
+
 	public void PerderSalud(float saludPerdida)
 	{
     	//animator.ResetTrigger("perderSalud");
