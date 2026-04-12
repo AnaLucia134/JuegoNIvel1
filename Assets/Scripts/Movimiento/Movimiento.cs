@@ -7,6 +7,7 @@ public class Movimiento : MonoBehaviour
 {
     [SerializeField] private float velocidadCaminata = 4f;
     [SerializeField] private float alturaSalto = 4.5f;
+    [SerializeField] private int maxSaltosTotales = 3;
     [SerializeField] private LayerMask capaDeSalto;
     [SerializeField] private LayerMask capaDeEscalera;
     [SerializeField] private float velocidadEscalar = 3f;
@@ -16,6 +17,7 @@ public class Movimiento : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private float escalaGravedad = 1f;
+    private int saltosRestantes;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,23 @@ public class Movimiento : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
         escalaGravedad =rb.gravityScale;
+    }
+
+    void Update()
+    {
+        if (boxCollider.IsTouchingLayers(capaDeSalto))
+        {
+            // Restablecer los saltos si está en el suelo y no ascendiendo
+            if (rb.velocity.y <= Mathf.Epsilon)
+            {
+                saltosRestantes = maxSaltosTotales;
+            }
+        }
+        else if (saltosRestantes == maxSaltosTotales)
+        {
+            // Si el jugador cae de una plataforma sin saltar (pierde el salto base)
+            saltosRestantes = maxSaltosTotales - 1;
+        }
     }
 
     public void Moverse(float movimientoX)
@@ -42,12 +61,18 @@ public class Movimiento : MonoBehaviour
     {
         if (debeSaltar)
         {
-            if (boxCollider.IsTouchingLayers(capaDeSalto))
+            bool tocandoSuelo = boxCollider.IsTouchingLayers(capaDeSalto);
+
+            // Condición original (salto normal tocando el suelo) o salto extra (en el aire si le quedan saltos)
+            if (tocandoSuelo || saltosRestantes > 0)
             {
                 rb.velocity = new Vector2(
                     rb.velocity.x,
                     Mathf.Sqrt(-2f * escalaGravedad * Physics2D.gravity.y * alturaSalto)
                 );
+                
+                // Si hizo el primer salto del suelo, igual gasta uno.
+                saltosRestantes--;
             }
         }
         else
