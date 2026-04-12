@@ -99,12 +99,10 @@ public class Movimiento : MonoBehaviour
     {
         if (!boxCollider.IsTouchingLayers(capaDeEscalera))
         {
-            Debug.Log("No toca escalera");
             rb.gravityScale = escalaGravedad;
             return;
         }
 
-        Debug.Log("Tocando escalera");
         rb.velocity = new Vector2(rb.velocity.x, movimientoY * velocidadEscalar);
         rb.gravityScale = 0f;
     }
