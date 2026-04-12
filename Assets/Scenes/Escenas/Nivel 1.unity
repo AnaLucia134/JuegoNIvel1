@@ -484,6 +484,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42298cab9bbdf2a46a92b67a48ae4bb9, type: 3}
+--- !u!1 &380562381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6777497543808176373, guid: c1584879ef1a5df4798eb76d5dbb7096, type: 3}
+  m_PrefabInstance: {fileID: 2853232540198061301}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &380562387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380562381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0258b55a22d78824f9c895d621a9273c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sonidoRecogerItem: {fileID: 8300000, guid: ec86bd313212c25449427bda55172017, type: 3}
 --- !u!1001 &501829493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1064,6 +1082,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidadCaminata: 4
   alturaSalto: 4
+  maxSaltosTotales: 3
   capaDeSalto:
     serializedVersion: 2
     m_Bits: 448
@@ -11398,7 +11417,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6777497543808176373, guid: c1584879ef1a5df4798eb76d5dbb7096, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 380562387}
   m_SourcePrefab: {fileID: 100100000, guid: c1584879ef1a5df4798eb76d5dbb7096, type: 3}
 --- !u!1001 &6881371351258867573
 PrefabInstance:
