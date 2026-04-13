@@ -3,87 +3,81 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Salud : MonoBehaviour
 {
-	[SerializeField] private float saludMax = 3f;
-	[SerializeField] private bool destruirAlMorir = true;
-	[SerializeField] private float tiempoEnDestruirse = 0f;
-	[SerializeField] private UnityEvent<float> alPerderSalud;
-	[SerializeField] private UnityEvent alMorir;
+    [SerializeField] private float saludMax = 3f;
+    [SerializeField] private bool destruirAlMorir = true;
+    [SerializeField] private float tiempoEnDestruirse = 0f;
+	[SerializeField] private string nombreEscenaMenu = "Menu principal";
+    [SerializeField] private UnityEvent<float> alPerderSalud;
+    [SerializeField] private UnityEvent alMorir;
 
-	private float saludActual;
-	private Animator animator;
-	private bool estaMuerto = false;
+    private float saludActual;
+    private Animator animator;
+    private bool estaMuerto = false;
 
-	public event Action alActualizarSalud;
+    public event Action alActualizarSalud;
 
-	private void Awake()
-	{
-    	animator = GetComponent<Animator>();
-    	saludActual = saludMax;
-	}
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        saludActual = saludMax;
+    }
 
-	private void Start()
-	{
-    	alActualizarSalud?.Invoke();
-	}
+    private void Start()
+    {
+        alActualizarSalud?.Invoke();
+    }
 
-	public bool EstaMuerto()
-	{
-    	return estaMuerto;
-	}
+    public bool EstaMuerto()
+    {
+        return estaMuerto;
+    }
 
-	public float ObtenerFraccion()
-	{
-    	return saludActual / saludMax;
-	}
+    public float ObtenerFraccion()
+    {
+        return saludActual / saludMax;
+    }
 
-	public float ObtenerSalud()
-	{
-    	return saludActual;
-	}
+    public float ObtenerSalud()
+    {
+        return saludActual;
+    }
 
-	public void AjustarSalud(float salud)
-	{
-    	saludActual = salud;
-    	alActualizarSalud?.Invoke();
-	}
+    public void AjustarSalud(float salud)
+    {
+        saludActual = salud;
+        alActualizarSalud?.Invoke();
+    }
 
-	public void CurarCompletamente()
+    public void CurarCompletamente()
+    {
+        if (estaMuerto) return;
+
+        saludActual = saludMax;
+        alActualizarSalud?.Invoke();
+    }
+
+    public void PerderSalud(float saludPerdida)
+    {
+        saludActual = Mathf.Max(saludActual - saludPerdida, 0);
+        alPerderSalud?.Invoke(saludPerdida);
+        alActualizarSalud?.Invoke();
+
+        if (saludActual == 0)
+        {
+            Morir();
+        }
+    }
+
+    private void Morir()
 	{
 		if (estaMuerto) return;
 
-		// Restaurar la salud al máximo permitido
-		saludActual = saludMax;
-		alActualizarSalud?.Invoke();
-	}
-
-	public void PerderSalud(float saludPerdida)
-	{
-    	//animator.ResetTrigger("perderSalud");
-    	saludActual = Mathf.Max(saludActual - saludPerdida, 0);
-    	alPerderSalud?.Invoke(saludPerdida);
-    	alActualizarSalud?.Invoke();
-    	if (saludActual == 0)
-    	{
-        	Morir();
-    	}
-    	else
-    	{
-        	//animator.SetTrigger("perderSalud");
-    	}
-	}
-	private void Morir()
-	{
-    	if (estaMuerto) return;
-
-    	alMorir?.Invoke();
-    	estaMuerto = true;
-    	//animator.SetTrigger("morir");
-    	if (destruirAlMorir)
-    	{
-        	Destroy(gameObject, tiempoEnDestruirse);
-    	}
+		estaMuerto = true;
+		alMorir?.Invoke();
+		SceneManager.LoadScene(0);
 	}
 }

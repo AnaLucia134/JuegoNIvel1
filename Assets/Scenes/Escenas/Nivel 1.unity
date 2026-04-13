@@ -1450,6 +1450,7 @@ MonoBehaviour:
   saludMax: 200
   destruirAlMorir: 1
   tiempoEnDestruirse: 0
+  nombreEscenaMenu: MenuPrincipal
   alPerderSalud:
     m_PersistentCalls:
       m_Calls: []
@@ -11018,7 +11019,7 @@ GameObject:
   - component: {fileID: 2118717662}
   - component: {fileID: 2118717661}
   - component: {fileID: 2118717660}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Tilemap Escalera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
