@@ -34,6 +34,17 @@ public class ControlJugador : MonoBehaviour
     {
         movimiento.Saltar(context.action.triggered);
     }
+    public void AlCorrer(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            movimiento.EstablecerCorrer(true);
+        }
+        else if (context.canceled)
+        {
+            movimiento.EstablecerCorrer(false);
+        }
+    }
     public void AlLanzar(InputAction.CallbackContext context)
 	{
     	if (!context.action.triggered) { return; }

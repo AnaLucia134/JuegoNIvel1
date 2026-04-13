@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 public class Movimiento : MonoBehaviour
 {
     [SerializeField] private float velocidadCaminata = 4f;
+    [SerializeField] private float velocidadCorrer = 7f;
+    private bool estaCorriendo = false;
+
     [SerializeField] private float alturaSalto = 4.5f;
     [SerializeField] private int maxSaltosTotales = 3;
     [SerializeField] private LayerMask capaDeSalto;
@@ -45,9 +48,15 @@ public class Movimiento : MonoBehaviour
         }
     }
 
+    public void EstablecerCorrer(bool corriendo)
+    {
+        estaCorriendo = corriendo;
+    }
+
     public void Moverse(float movimientoX)
     {
-        rb.velocity = new Vector2(movimientoX * velocidadCaminata, rb.velocity.y);
+        float velocidadActual = estaCorriendo ? velocidadCorrer : velocidadCaminata;
+        rb.velocity = new Vector2(movimientoX * velocidadActual, rb.velocity.y);
         animator.SetBool("isrunning", movimientoX != 0);
     }
     public void VoltearTransform(float movimientoX)
@@ -90,12 +99,10 @@ public class Movimiento : MonoBehaviour
     {
         if (!boxCollider.IsTouchingLayers(capaDeEscalera))
         {
-            Debug.Log("No toca escalera");
             rb.gravityScale = escalaGravedad;
             return;
         }
 
-        Debug.Log("Tocando escalera");
         rb.velocity = new Vector2(rb.velocity.x, movimientoY * velocidadEscalar);
         rb.gravityScale = 0f;
     }
