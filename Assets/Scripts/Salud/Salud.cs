@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,7 @@ public class Salud : MonoBehaviour
     [SerializeField] private float saludMax = 3f;
     [SerializeField] private bool destruirAlMorir = true;
     [SerializeField] private float tiempoEnDestruirse = 0f;
-	[SerializeField] private string nombreEscenaMenu = "Menu principal";
+    [SerializeField] private float tiempoAntesDeRegresar = 1.5f;
     [SerializeField] private UnityEvent<float> alPerderSalud;
     [SerializeField] private UnityEvent alMorir;
 
@@ -48,8 +47,13 @@ public class Salud : MonoBehaviour
 
     public void AjustarSalud(float salud)
     {
-        saludActual = salud;
+        saludActual = Mathf.Clamp(salud, 0, saludMax);
         alActualizarSalud?.Invoke();
+
+        if (saludActual <= 0 && !estaMuerto)
+        {
+            Morir();
+        }
     }
 
     public void CurarCompletamente()
@@ -62,22 +66,43 @@ public class Salud : MonoBehaviour
 
     public void PerderSalud(float saludPerdida)
     {
+        if (estaMuerto) return;
+
         saludActual = Mathf.Max(saludActual - saludPerdida, 0);
         alPerderSalud?.Invoke(saludPerdida);
         alActualizarSalud?.Invoke();
 
-        if (saludActual == 0)
+        if (saludActual <= 0)
         {
             Morir();
         }
     }
 
     private void Morir()
-	{
-		if (estaMuerto) return;
+    {
+        if (estaMuerto) return;
 
-		estaMuerto = true;
-		alMorir?.Invoke();
-		SceneManager.LoadScene(0);
-	}
+        estaMuerto = true;
+        alMorir?.Invoke();
+
+        Debug.Log("Murió: " + gameObject.name);
+
+        if (CompareTag("Player"))
+        {
+            Debug.Log("El jugador murió, regresando al menú...");
+            StartCoroutine(RegresarAlMenu());
+            return;
+        }
+
+        if (destruirAlMorir)
+        {
+            Destroy(gameObject, tiempoEnDestruirse);
+        }
+    }
+
+    private IEnumerator RegresarAlMenu()
+    {
+        yield return new WaitForSeconds(tiempoAntesDeRegresar);
+        SceneManager.LoadScene(0);
+    }
 }
